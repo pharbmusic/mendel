@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geheimer Zugang</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1581091012184-7d74d3d4f810?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .container, .success {
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      max-width: 90vw;
+    }
+
+    select {
+      font-size: 1.2em;
+      margin: 5px;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ff4444;
+      color: white;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background-color: #dd0000;
+    }
+
+    .neon-text {
+      font-size: 2em;
+      color: #ff4444;
+      text-shadow:
+        0 0 5px #ff0000,
+        0 0 10px #ff0000,
+        0 0 20px #ff0000,
+        0 0 40px #ff0000;
+    }
+
+    .success img {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 600px) {
+      select {
+        font-size: 1em;
+        margin: 3px;
+      }
+
+      .neon-text {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button onclick="showCodeInput()">Zum Geheimcode</button>
+    <div id="codeForm" class="hidden">
+      <p>Wähle den 4-stelligen Code, indem du am Rad drehst:</p>
+      <select id="num1"></select>
+      <select id="num2"></select>
+      <select id="num3"></select>
+      <select id="num4"></select>
+      <br><br>
+      <button onclick="checkCode()">Weiter</button>
+    </div>
+  </div>
+
+  <div class="success hidden">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Gregor_Mendel_2.jpg" alt="Gregor Mendel">
+    <p class="neon-text">Du hast Gregor Mendel gerettet! Danke V3d</p>
+  </div>
+
+  <script>
+    function showCodeInput() {
+      document.getElementById('codeForm').classList.remove('hidden');
+    }
+
+    function checkCode() {
+      const code = [
+        document.getElementById('num1').value,
+        document.getElementById('num2').value,
+        document.getElementById('num3').value,
+        document.getElementById('num4').value
+      ];
+
+      const correct = ['9','3','6','4'];
+
+      if (JSON.stringify(code) === JSON.stringify(correct)) {
+        document.querySelector('.container').classList.add('hidden');
+        document.querySelector('.success').classList.remove('hidden');
+      } else {
+        alert('Falscher Code! Versuch es erneut.');
+      }
+    }
+
+    // Dynamisch Zahlen in die Select-Felder einfügen
+    window.onload = () => {
+      const fields = ['num1', 'num2', 'num3', 'num4'];
+      fields.forEach(id => {
+        const sel = document.getElementById(id);
+        sel.innerHTML = '<option value="">-</option>';
+        for (let i = 0; i <= 9; i++) {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = i;
+          sel.appendChild(opt);
+        }
+      });
+    };
+  </script>
+</body>
+</html>
